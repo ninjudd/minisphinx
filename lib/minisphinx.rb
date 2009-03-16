@@ -51,7 +51,7 @@ module Minisphinx
 
       @model_class = opts.delete(:model_class)
       @table_name  = opts.delete(:table_name)
-      @db = opts.delete(:db) || model_class.connection.instance_variable_get("@config")
+      @db = opts.delete(:db) || model_class.connection.config
       @db = ActiveRecord::Base.configurations["#{db}_#{RAILS_ENV}"] unless db.kind_of?(Hash)
 
       @config = self.class.config.merge(opts)
@@ -195,4 +195,8 @@ module Minisphinx
       }
     end
   end
+end
+
+class ActiveRecord::ConnectionAdapters::AbstractAdapter
+  attr_reader :config
 end
