@@ -6,10 +6,10 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |s|
     s.name = "minisphinx"
-    s.summary = %Q{TODO}
-    s.email = "justin@geni.com"
+    s.summary = %Q{An alternative to ultrasphinx. Index ActiveRecord models with the sphinx search engine.}
+    s.email = "code@justinbalthrop.com"
     s.homepage = "http://github.com/ninjudd/minisphinx"
-    s.description = "TODO"
+    s.description = "An alternative to ultrasphinx."
     s.authors = ["Justin Balthrop"]
   end
 rescue LoadError
