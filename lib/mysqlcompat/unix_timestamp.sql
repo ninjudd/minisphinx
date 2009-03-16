@@ -1,0 +1,13 @@
+/* Taken from ultrasphinx */
+
+/* 
+ mysqlcompat-1.0b3
+ public domain
+ modified
+ UNIX_TIMESTAMP(date)
+*/
+
+CREATE FUNCTION unix_timestamp(timestamp without time zone)
+RETURNS bigint AS $$
+  SELECT EXTRACT(EPOCH FROM $1)::bigint
+$$ VOLATILE LANGUAGE SQL;
