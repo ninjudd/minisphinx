@@ -23,7 +23,7 @@ module Minisphinx
       end
       file << "\n# Indexes\n"
       indexes.each do |index|
-        index.config[:path] = opts[:path]
+        index.path = opts[:path]
         file << index.to_s + "\n\n"
       end
     end
@@ -136,7 +136,7 @@ module Minisphinx
       @field = opts[:field]
       @name  = opts[:as] || opts[:field]
       @name  = "#{name}_#{opts[:suffix]}" if opts[:suffix]
-      @field = "#{table_name}.#{field}"   if not field.index('.')      
+      @field = "#{table_name}.#{field}"   if not field.index(/[.\s]/)      
       @field = opts[:transform] % field   if opts[:transform]
       @type  = opts[:type]
     end
@@ -184,6 +184,10 @@ module Minisphinx
         end,
         charset && "charset_table = #{charset}",
       ])
+    end
+
+    def path=(path)
+      config[:path] = "#{path}/#{name}"
     end
 
     def self.config
