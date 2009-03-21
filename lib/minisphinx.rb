@@ -121,6 +121,7 @@ module Minisphinx
 
     TYPE_MAP = {
       :integer   => :uint,
+      :decimal   => :float,
       :boolean   => :bool,
       :date      => :timestamp,
       :datetime  => :timestamp,
