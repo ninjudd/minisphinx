@@ -94,7 +94,7 @@ module Minisphinx
     end
 
     def sql_query_info
-      "SELECT * FROM #{table_name} WHERE search_profiles.id = $id"
+      "SELECT * FROM #{table_name} WHERE id = $id"
     end
 
     def self.config
