@@ -43,13 +43,13 @@ module Minisphinx
       end
       lines.join(", \\\n")
     end
-  end
-end
 
-class DeepHash < Hash
-  def initialize
-    super do |hash, key|
-      hash[key] = DeepHash.new
+    class DeepHash < Hash
+      def initialize
+        super do |hash, key|
+          hash[key] = DeepHash.new
+        end
+      end
     end
   end
 end
