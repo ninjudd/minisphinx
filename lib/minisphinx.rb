@@ -138,7 +138,7 @@ module Minisphinx
       @name  = opts[:as] || opts[:field]
       @name  = "#{name}_#{opts[:suffix]}" if opts[:suffix]
       @field = opts[:field]
-      @field = "#{table_name}.#{field}"   if not field.index(/[.\s]/)      
+      @field = "#{table_name}.#{field}"   if not field.index(/[\(.\s]/)
       @field = opts[:transform] % field   if opts[:transform]
       @field = "UNIX_TIMESTAMP(#{field})" if type == :timestamp 
     end
