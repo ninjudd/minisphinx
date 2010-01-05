@@ -157,8 +157,11 @@ module Minisphinx
     end
     
     def type
-      @type ||= (model_class and column = model_class.columns_hash[name]) && column.type.to_sym || :string
-      TYPE_MAP[@type] || @type
+      if @type.nil? and model_class
+        column = model_class.columns_hash[name]
+        @type  = column.sql_type == 'bigint' ? :bigint : column.type.to_sym
+      end
+      TYPE_MAP[@type] || @type || :string
     end
         
     def to_s
