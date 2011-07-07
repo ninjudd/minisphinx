@@ -11,6 +11,7 @@ begin
     s.homepage = "http://github.com/ninjudd/minisphinx"
     s.description = "An alternative to ultrasphinx."
     s.authors = ["Justin Balthrop"]
+    s.add_dependency('deep_hash', '>= 0.0.1')
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
