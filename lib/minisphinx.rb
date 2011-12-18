@@ -235,10 +235,6 @@ module Minisphinx
         :docinfo      => 'extern',
       }
     end
-
-    def command(path, type = nil)
-      "indexer --rotate --config '#{path}/sphinx.conf' #{type == :delta ? delta : name}"
-    end
   end
 end
 
