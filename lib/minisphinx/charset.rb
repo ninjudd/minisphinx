@@ -11,36 +11,27 @@ module Minisphinx
     end
 
     def self.charset
-      if @charset.nil?
-        @charset = Hash.deep(2)
-        YAML.load_file(RAILS_ROOT + '/config/sphinx/charset.yml').each do |type, table|
-          type = type.to_sym
-          table.each do |group, charset|
-            group = group.to_sym
-            charset.split(',').each do |char|
-              key, value = char.strip.split('->')
-              @charset[type][group][key] = value
-            end
-          end
-        end
-      end
-      @charset
+      @charset ||= YAML.load_file(RAILS_ROOT + '/config/sphinx/charset.yml')
     end
 
     MAX_PER_LINE = 50
     def to_s
-      chars = []
-      self.class.charset[type].each do |group, charset|
-        next if except and except.include?(group)
-        next if only and not only.include?(group)
+      chars = {}
 
-        charset.each do |key, value|
-          chars << (value ? "#{key}->#{value}" : key)
+      self.class.charset[type.to_s].each do |charset|
+        charset.each do |group, charset|
+          next if except and except.include?(group)
+          next if only and not only.include?(group)
+          pp group
+          charset.split(',').each do |char|
+            key = char.strip.split('->').first
+            chars[key] ||= char
+          end
         end
       end
 
       lines = []
-      chars.sort.each_slice(MAX_PER_LINE) do |line_chars|
+      chars.values.flatten.sort.each_slice(MAX_PER_LINE) do |line_chars|
         lines << line_chars.join(', ')
       end
       lines.join(", \\\n")
