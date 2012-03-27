@@ -22,7 +22,6 @@ module Minisphinx
         charset.each do |group, charset|
           next if except and except.include?(group)
           next if only and not only.include?(group)
-          pp group
           charset.split(',').each do |char|
             key = char.strip.split('->').first
             chars[key] ||= char
