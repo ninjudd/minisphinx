@@ -126,6 +126,11 @@ module Minisphinx
         field_opts = {:field => field_opts} unless field_opts.kind_of?(Hash)
         field_opts[:table_name]  = opts[:table_name]
         field_opts[:model_class] = opts[:model_class]
+
+        if field_opts[:sortable] and [nil, :text].include?(field_opts[:type])
+          raise ':sortable only permitted for :text fields'
+        end
+
         [Field.new(field_opts), field_opts[:sortable] && Field.new(field_opts.merge(:type => :sortable, :suffix => 'sortable'))]
       end.flatten.compact
     end
