@@ -5,6 +5,7 @@ module Minisphinx
     attr_reader :type, :only, :except
 
     def initialize(opts)
+      opts = {} if opts == true
       @type     = opts[:type] || :standard
       @only     = Array(opts[:only]).to_set   if opts[:only]
       @except   = Array(opts[:except]).to_set if opts[:except]
@@ -20,8 +21,8 @@ module Minisphinx
 
       self.class.charset[type.to_s].each do |charset|
         charset.each do |group, charset|
-          next if except and except.include?(group)
-          next if only and not only.include?(group)
+          next if except and except.include?(group.to_sym)
+          next if only and not only.include?(group.to_sym)
           charset.split(',').each do |char|
             key = char.strip.split('->').first
             chars[key] ||= char
