@@ -190,7 +190,7 @@ module Minisphinx
   end
 
   class Index
-    attr_reader :name, :sources, :charset, :config, :delta
+    attr_reader :name, :sources, :charset, :ngram, :config, :delta
 
     def initialize(name, opts)
       @name    = name
@@ -199,6 +199,7 @@ module Minisphinx
       @delta   = "#{name}_delta" if @delta == true
       @sources = Array(config.delete(:source)) + Array(config.delete(:sources))
       @charset = Minisphinx::Charset.new(config.delete(:charset)) if config[:charset]
+      @ngram   = Minisphinx::Charset.new(config.delete(:ngram))   if config[:ngram]
     end
 
     def configuration(opts)
@@ -212,6 +213,8 @@ module Minisphinx
           "#{key} = #{value}"
         end,
         charset && "charset_table = #{charset}",
+        ngram   && "ngram_chars = #{ngram}",
+        ngram   && "ngram_len = 1",
       ])
       if delta
         str << Minisphinx.config_block("index #{delta} : #{name}", [

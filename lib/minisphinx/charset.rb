@@ -2,11 +2,11 @@ require 'deep_hash'
 
 module Minisphinx
   class Charset
-    attr_reader :type, :only, :except
+    attr_reader :name, :only, :except
 
     def initialize(opts)
-      opts = {} if opts == true
-      @type     = opts[:type] || :standard
+      opts = {:name => opts} if opts.kind_of?(Symbol)
+      @name     = opts[:name]
       @only     = Array(opts[:only]).to_set   if opts[:only]
       @except   = Array(opts[:except]).to_set if opts[:except]
     end
@@ -19,7 +19,7 @@ module Minisphinx
     def to_s
       chars = {}
 
-      self.class.charset[type.to_s].each do |charset|
+      self.class.charset[name.to_s].each do |charset|
         charset.each do |group, charset|
           next if except and except.include?(group.to_sym)
           next if only and not only.include?(group.to_sym)
