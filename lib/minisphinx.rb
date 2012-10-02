@@ -78,7 +78,7 @@ module Minisphinx
         "sql_user = #{db[:username]}",
         "sql_query_info = #{sql_query_info}",
         fields.collect do |field|
-          "sql_attr_#{field.type} = #{field.name}" if field.type != :string
+          "sql_attr_#{field.type} = #{field.name}" if field.type != :text
         end,
       ])
       str << Minisphinx.config_block("source #{name} : #{name}_base", [
@@ -146,8 +146,8 @@ module Minisphinx
       :date      => :timestamp,
       :datetime  => :timestamp,
       :timestamp => :timestamp,
-      :text      => :string,
-      :sortable  => :str2ordinal,
+      :string    => :text,
+      :sortable  => :string,
     }
 
     def initialize(opts)
@@ -181,7 +181,7 @@ module Minisphinx
         column = model_class.columns_hash[name]
         @type  = column.sql_type == 'bigint' ? :bigint : column.type.to_sym
       end
-      TYPE_MAP[@type] || @type || :string
+      TYPE_MAP[@type] || @type || :text
     end
 
     def to_s
