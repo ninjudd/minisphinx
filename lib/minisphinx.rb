@@ -1,3 +1,5 @@
+require 'minisphinx/charset'
+
 module Minisphinx
   def sphinx_source(name, opts)
     opts[:model_class] ||= self
