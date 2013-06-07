@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/test_helper'
+require 'tmpdir'
 
 class MinisphinxTest < Test::Unit::TestCase
   class CreateTables < ActiveRecord::Migration
@@ -42,7 +43,6 @@ class MinisphinxTest < Test::Unit::TestCase
 
   context 'with a db connection' do
     setup do
-      Dir.mkdir('/tmp/minisphinx-test')
       CreateTables.verbose = false
       CreateTables.up
     end
@@ -53,8 +53,10 @@ class MinisphinxTest < Test::Unit::TestCase
 
     should "write config" do
       Pet.initialize_sphinx
-      Minisphinx.configure(:path => '/tmp/minisphinx-test')
-      assert File.exists('/tmp/minisphinx-test/sphinx.conf')
+      Dir.mktmpdir("minisphinx-test") do |path|
+        Minisphinx.configure(:path => path)
+        assert File.exists?("#{path}/sphinx.conf")
+      end
     end
   end
 end
