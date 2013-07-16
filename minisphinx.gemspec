@@ -9,6 +9,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{A simple Sphinx indexing library for Ruby}
   gem.summary       = gem.description
   gem.homepage      = "https://github.com/ninjudd/minisphinx"
+  gem.license       = 'MIT'
 
   gem.add_development_dependency 'shoulda', '3.0.1'
   gem.add_development_dependency 'mocha'
